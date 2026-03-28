@@ -4,11 +4,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>chess</title>
+  <title>Chess 2.0 – Marcel Graf</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap"
+    rel="stylesheet" />
 </head>
 
 <body>
-  <div id="board"></div>
+  <div id="container">
+    <div id="board"></div>
+    <div id="overlay" class="overlay hidden">
+      <div class="overlay-box">
+        <div class="overlay-title" id="overlayTitle">Schachmat.</div>
+        <div class="overlay-sub" id="overlaySub">Die Engine gewinnt</div>
+        <button class="overlay-btn" id="overlayBtn">Neues Spiel ↺</button>
+      </div>
+    </div>
+  </div>
   <script type="module" src="/src/main.js"></script>
 </body>
 

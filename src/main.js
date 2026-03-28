@@ -30,6 +30,16 @@ stockfish.onmessage = (event) => {
 
     chess.move({ from, to, promotion: 'q' });
     updateBoard();
+
+    if (chess.isCheckmate()) {
+      showOverlay('Schachmatt.', 'Die Engine gewinnt · Versuch es noch einmal');
+      return;
+    }
+
+    if (chess.isDraw()) {
+      showOverlay('Remis.', 'Die Partie endet unentschieden');
+      return;
+    }
   }
 };
 
@@ -59,6 +69,21 @@ function getLegalMoves() {
 function onMove(from, to) {
   chess.move({ from, to, promotion: 'q' });
 
+  console.log('Nach Spielerzug:');
+  console.log('isCheckmate:', chess.isCheckmate());
+  console.log('turn:', chess.turn()); // 'b' = Schwarz dran, 'w' = Weiß dran
+  console.log('FEN:', chess.fen());
+
+  if (chess.isCheckmate()) {
+    showOverlay('Schachmatt.', 'Du gewinnst diese Partie · Glückwunsch!');
+    return;
+  }
+
+  if (chess.isDraw()) {
+    showOverlay('Remis.', 'Die Partie endet unentschieden');
+    return;
+  }
+
   if (!chess.isGameOver()) {
     stockfish.postMessage('position fen ' + chess.fen());
     stockfish.postMessage('go movetime 500');
@@ -77,3 +102,33 @@ function updateBoard() {
     check: chess.inCheck(),
   });
 }
+
+const overlay = document.getElementById('overlay');
+const overlayTitle = document.getElementById('overlayTitle');
+const overlaySub = document.getElementById('overlaySub');
+const overlayBtn = document.getElementById('overlayBtn');
+
+function showOverlay(title, sub) {
+  overlayTitle.textContent = title;
+  overlaySub.textContent = sub;
+
+  setTimeout(() => {
+    overlay.classList.remove('hidden');
+    setTimeout(() => overlay.classList.add('visible'), 10);
+  }, 1000);
+}
+
+overlayBtn.addEventListener('click', () => {
+  overlay.classList.remove('visible');
+  setTimeout(() => overlay.classList.add('hidden'), 400);
+  chess.reset();
+  ground.set({
+    fen: chess.fen(),
+    movable: {
+      color: 'white',
+      free: false,
+      dests: getLegalMoves(),
+    },
+    turnColor: 'white',
+  });
+});

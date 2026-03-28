@@ -12,7 +12,77 @@ body {
   min-height: 100vh;
 }
 
+#container {
+  position: relative;
+  width: 560px;
+  height: 560px;
+}
+
 #board {
   width: 560px;
   height: 560px;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.overlay.hidden {
+  display: none;
+}
+
+.overlay-box {
+  background: #0e0e0e;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  padding: 40px 52px;
+  text-align: center;
+}
+
+.overlay-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 300;
+  color: #e8c97a;
+  line-height: 1;
+}
+
+.overlay-sub {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin-top: 10px;
+}
+
+.overlay-btn {
+  margin-top: 28px;
+  display: inline-block;
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c9a84c;
+  border: 1px solid rgba(201, 168, 76, 0.5);
+  padding: 10px 28px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.overlay-btn:hover {
+  background: #c9a84c;
+  color: #0a0a0a;
 }
