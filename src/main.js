@@ -85,8 +85,9 @@ function onMove(from, to) {
   }
 
   if (!chess.isGameOver()) {
+    stockfish.postMessage(`setoption name Skill Level value ${skillLevel}`);
     stockfish.postMessage('position fen ' + chess.fen());
-    stockfish.postMessage('go movetime 500');
+    stockfish.postMessage(`go movetime ${moveTime}`);
   }
 }
 
@@ -138,4 +139,18 @@ const overlayClose = document.getElementById('overlayClose');
 overlayClose.addEventListener('click', () => {
   overlay.classList.remove('visible');
   setTimeout(() => overlay.classList.add('hidden'), 400);
+});
+
+let skillLevel = 10;
+let moveTime = 500;
+
+document.querySelectorAll('.diff-item').forEach((item) => {
+  item.addEventListener('click', () => {
+    document
+      .querySelectorAll('.diff-item')
+      .forEach((i) => i.classList.remove('active'));
+    item.classList.add('active');
+    skillLevel = parseInt(item.dataset.skill);
+    moveTime = parseInt(item.dataset.time);
+  });
 });
