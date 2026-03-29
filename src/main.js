@@ -6,7 +6,7 @@ import 'chessground/assets/chessground.cburnett.css';
 import './style.css';
 
 const chess = new Chess();
-const stockfish = new Worker('/stockfish.js');
+const stockfish = new Worker('/chess/stockfish.js');
 
 let engineReady = false;
 
