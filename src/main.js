@@ -74,6 +74,10 @@ const ground = Chessground(document.getElementById('board'), {
 });
 
 // =========================================
+// RESPONSIVE — Brett neu berechnen               //TODO
+// =========================================
+
+// =========================================
 //      HILFSFUNKTIONEN
 // =========================================
 
@@ -151,6 +155,9 @@ function hideOverlay() {
   setTimeout(() => overlay.classList.add('hidden'), 400);
 }
 
+// Overlay per X schließen
+overlayClose.addEventListener('click', hideOverlay);
+
 // Neues Spiel starten
 overlayBtn.addEventListener('click', () => {
   hideOverlay();
@@ -165,9 +172,6 @@ overlayBtn.addEventListener('click', () => {
     turnColor: 'white',
   });
 });
-
-// Overlay per X schließen
-overlayClose.addEventListener('click', hideOverlay);
 
 // =========================================
 //        SCHWIERIGKEIT
