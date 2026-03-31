@@ -186,3 +186,12 @@ document.querySelectorAll('.diff-item').forEach((item) => {
     moveTime = parseInt(item.dataset.time);
   });
 });
+
+// =========================================
+// ZUG ZURÜCK
+// =========================================
+document.getElementById('undoBtn').addEventListener('click', () => {
+  chess.undo(); // Engine-Zug zurück
+  chess.undo(); // Spieler-Zug zurück
+  updateBoard();
+});
