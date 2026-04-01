@@ -43,6 +43,8 @@ stockfish.onmessage = (event) => {
 
     chess.move({ from, to, promotion: 'q' });
     updateBoard();
+    updateStatus();
+    updateHistory();
 
     if (chess.isCheckmate()) {
       showOverlay('Schachmatt.', 'Die Engine gewinnt · Versuch es noch einmal');
@@ -111,6 +113,8 @@ function updateBoard() {
 // =========================================
 function onMove(from, to) {
   chess.move({ from, to, promotion: 'q' });
+  updateStatus();
+  updateHistory();
 
   if (chess.isCheckmate()) {
     showOverlay('Schachmatt.', 'Du gewinnst diese Partie · Glückwunsch!');
@@ -199,6 +203,8 @@ document.getElementById('undoBtn').addEventListener('click', () => {
   const move2 = chess.undo(); // Spieler-Zug zurück
   if (move2) redoStack.push(move2);
   updateBoard();
+  updateStatus();
+  updateHistory();
 });
 
 document.getElementById('redoBtn').addEventListener('click', () => {
@@ -207,4 +213,73 @@ document.getElementById('redoBtn').addEventListener('click', () => {
   const move2 = redoStack.pop();
   if (move2) chess.move(move2);
   updateBoard();
+  updateStatus();
+  updateHistory();
 });
+
+// =========================================
+// PROTOKOLL — Status & Zughistorie
+// =========================================
+function updateStatus() {
+  const dot = document.getElementById('statusDot');
+  const text = document.getElementById('statusText');
+  const sub = document.getElementById('statusSub');
+
+  if (chess.isCheckmate()) {
+    dot.className = 'status-dot black';
+    text.textContent = 'Schachmatt';
+    sub.textContent = '';
+    return;
+  }
+
+  if (chess.isDraw()) {
+    dot.className = 'status-dot black';
+    text.textContent = 'Remis';
+    sub.textContent = '';
+    return;
+  }
+
+  if (chess.turn() === 'w') {
+    dot.className = 'status-dot white';
+    text.textContent = 'Weiß am Zug';
+    sub.textContent = 'Dein Zug';
+  } else {
+    dot.className = 'status-dot thinking';
+    text.textContent = 'Engine denkt...';
+    sub.textContent = 'Zug ' + chess.moveNumber();
+  }
+}
+
+function updateHistory() {
+  const histEl = document.getElementById('history');
+  const moves = chess.history();
+
+  if (!moves.length) {
+    histEl.innerHTML = '';
+    return;
+  }
+
+  let html = '';
+  for (let i = 0; i < moves.length; i += 2) {
+    const num = Math.floor(i / 2) + 1;
+    const white = moves[i] || '';
+    const black = moves[i + 1] || '';
+    const latestW = i === moves.length - 1;
+    const latestB = i + 1 === moves.length - 1;
+
+    html += `<div class="h-row">
+      <span class="h-num">${num}.</span>
+      <span class="h-move${latestW ? ' latest' : ''}">${white}</span>
+      <span class="h-move${latestB ? ' latest' : ''}">${black}</span>
+    </div>`;
+  }
+
+  histEl.innerHTML = html;
+  histEl.scrollTop = histEl.scrollHeight;
+}
+
+// =========================================
+// INITIALISIERUNG
+// =========================================
+updateStatus();
+updateHistory();
