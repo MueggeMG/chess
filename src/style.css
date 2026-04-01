@@ -338,6 +338,7 @@ nav.scrolled {
   margin-top: 0;
   display: flex;
   gap: 0;
+  margin-bottom: 16px;
 }
 
 #undoBtn {
@@ -531,5 +532,17 @@ footer {
   #sidebar-left,
   #sidebar-right {
     width: min(560px, 88vw);
+  }
+
+  #container {
+    order: 1;
+  }
+
+  #sidebar-left {
+    order: 2;
+  }
+
+  #sidebar-right {
+    order: 3;
   }
 }
