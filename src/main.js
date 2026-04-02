@@ -193,7 +193,7 @@ document.querySelectorAll('.diff-item').forEach((item) => {
 });
 
 // =========================================
-// UNDO / REDO / SURRENDER
+//      NEW GAME / SURRENDER / UNDO / REDO
 // =========================================
 let redoStack = [];
 
@@ -219,6 +219,22 @@ document.getElementById('redoBtn').addEventListener('click', () => {
 
 document.getElementById('surrenderBtn').addEventListener('click', () => {
   showOverlay('Aufgegeben.', 'Du hast die Partie aufgegeben · Neues Spiel?');
+});
+
+document.getElementById('newGameBtn').addEventListener('click', () => {
+  chess.reset();
+  redoStack = [];
+  ground.set({
+    fen: chess.fen(),
+    movable: {
+      color: 'white',
+      free: false,
+      dests: getLegalMoves(),
+    },
+    turnColor: 'white',
+  });
+  updateStatus();
+  updateHistory();
 });
 
 // =========================================
