@@ -66,6 +66,7 @@ nav {
   font-size: 20px;
   letter-spacing: 0.08em;
   color: var(--gold);
+  text-decoration: none;
 }
 
 .nav-links {
