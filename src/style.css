@@ -507,6 +507,9 @@ footer {
 /* =========================================
    RESPONSIVE
 ========================================= */
+/* =========================================
+   RESPONSIVE
+========================================= */
 @media (max-width: 768px) {
   nav {
     padding: 20px 24px;
@@ -521,19 +524,13 @@ footer {
     letter-spacing: 0.08em;
   }
 
-  #container {
-    margin-top: 80px;
-  }
-
   footer {
     padding: 24px;
     flex-direction: column;
     gap: 8px;
     text-align: center;
   }
-}
 
-@media (max-width: 768px) {
   #game-layout {
     grid-template-columns: 1fr;
     margin-top: 100px;
@@ -546,6 +543,7 @@ footer {
 
   #container {
     order: 1;
+    margin-top: 0;
   }
 
   #sidebar-left {
